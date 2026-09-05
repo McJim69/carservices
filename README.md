@@ -57,12 +57,12 @@ Key Features:
 ## 📸 Screenshots
 
 ### Public Site
-![Home Page](screenshots/home.jpg)  
-![Booking Form](screenshots/booking.jpg)
+![Home Page](img/screenshots/home.jpg)  
+![Booking Form](img/screenshots/booking.jpg)
 
 ### Admin Site
-![Dashboard](screenshots/admin_dashboard.jpg)  
-![Service Management](screenshots/services.jpg)
+![Dashboard](img/screenshots/admin_dashboard.jpg)  
+![Service Management](img/screenshots/services.jpg)
 
 ---
 
