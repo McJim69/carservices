@@ -1,0 +1,37 @@
+.loader {            
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	top: calc(50vh - 75px);
+    left: calc(50vw - 75px);
+	background:url(logo.png)no-repeat;
+	background-position:center;
+	background-size:100%;  
+	border-top: 10px solid blue;
+	border-right: 10px solid green;
+	border-bottom: 10px solid red;
+	border-left: 10px solid gray; 
+	border-radius: 50%;
+	-webkit-animation: spin 2s linear infinite;
+	animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loadingDiv {
+	position:absolute;
+	text-align:center;
+	z-index:9999;
+	min-width:100%;
+	min-height:100%;
+	background:#000;
+	opacity:.9;
+}	

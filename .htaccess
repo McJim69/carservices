@@ -1,0 +1,194 @@
+php_value upload_max_filesize 999M
+php_value post_max_size 999M
+php_value memory_limit 999M
+
+RewriteEngine On
+
+ErrorDocument 404 /404.php
+
+Options +Indexes
+
+IndexOptions +Charset=UTF-8 +FancyIndexing +FoldersFirst +HTMLTable +IconsAreLinks +IgnoreCase +NameWidth=* +SuppressDescription +SuppressRules +XHTML -SuppressHTMLPreamble
+
+IndexHeadInsert "\
+        <link rel=\"shortcut icon\" href=\"/apaxy/theme/favicon.ico\" />\
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />"
+
+IndexIgnore .htaccess apaxy/theme
+
+AddIcon /apaxy/theme/icons/empty.svg ^^BLANKICON^^
+AddIcon /apaxy/theme/icons/folder.svg ^^DIRECTORY^^
+AddIcon /apaxy/theme/icons/user-home.svg ..
+
+AddIconByType (ps,/apaxy/theme/icons/image-x-eps.svg) application/postscript
+
+AddIconByType (bmp,/apaxy/theme/icons/image-bmp.svg) image/bmp
+
+AddIconByType (gif,/apaxy/theme/icons/image-gif.svg) image/gif
+
+AddIconByType (ico,/apaxy/theme/icons/image-x-ico.svg) image/x-icon
+
+AddIconByType (jpg,/apaxy/theme/icons/image-jpeg.svg) image/jpeg
+
+AddIconByType (png,/apaxy/theme/icons/image-png.svg) image/png
+
+AddIconByType (psd,/apaxy/theme/icons/image-x-psd.svg) image/vnd.adobe.photoshop
+
+AddIconByType (draw,/apaxy/theme/icons/x-office-drawing.svg) image/svg+xml
+
+AddIconByType (tiff,/apaxy/theme/icons/image-tiff.svg) image/tiff
+
+AddIcon /apaxy/theme/icons/image-x-xcf.svg .xcf
+
+AddIconByType (image,/apaxy/theme/icons/image-x-generic.svg) image/* \
+                                                                   application/vnd.oasis.opendocument.graphics \
+                                                                   application/vnd.oasis.opendocument.graphics-template \
+                                                                   application/vnd.oasis.opendocument.image \
+                                                                   application/vnd.oasis.opendocument.image-template
+
+AddIconByType (playlist,/apaxy/theme/icons/audio-x-mp3-playlist.svg) audio/x-mpegurl \
+                                                                           application/vnd.apple.mpegurl \
+                                                                           application/pls+xml
+
+AddIconByType (audio,/apaxy/theme/icons/audio-x-generic.svg) audio/*
+
+AddIconByType (playlist,/apaxy/theme/icons/video-x-generic.svg) video/vnd.mpegurl
+
+AddIconByType (video,/apaxy/theme/icons/video-x-generic.svg) video/*
+
+AddIconByType (html,/apaxy/theme/icons/text-html.svg) text/html \
+                                                            application/xhtml+xml \
+                                                            text/uri-list
+
+AddIconByType (rss,/apaxy/theme/icons/application-rss+xml.svg) application/rss+xml \
+                                                                     application/atom+xml
+
+AddIconByType (vcal,/apaxy/theme/icons/evolution-calendar.svg) text/calendar \
+                                                                     text/x-vcalendar
+
+AddIconByType (vcard,/apaxy/theme/icons/addressbook.svg) text/vcard \
+                                                               text/x-vcard
+
+AddIconByType (torrent,/apaxy/theme/icons/application-x-bittorrent.svg) application/x-bittorrent
+
+AddIconByType (calc,/apaxy/theme/icons/x-office-spreadsheet.svg) application/vnd.oasis.opendocument.chart \
+                                                                       application/vnd.oasis.opendocument.chart-template \
+                                                                       application/vnd.oasis.opendocument.formula \
+                                                                       application/vnd.oasis.opendocument.formula-template \
+                                                                       application/vnd.oasis.opendocument.spreadsheet \
+                                                                       application/vnd.oasis.opendocument.spreadsheet-template \
+                                                                       text/csv \
+                                                                       application/vnd.ms-excel \
+                                                                       application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+AddIconByType (doc,/apaxy/theme/icons/x-office-document.svg) application/vnd.oasis.opendocument.text \
+                                                                   application/vnd.oasis.opendocument.text-master \
+                                                                   application/vnd.oasis.opendocument.text-template \
+                                                                   application/vnd.oasis.opendocument.text-web \
+                                                                   application/msword \
+                                                                   application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+AddIconByType (slideshow,/apaxy/theme/icons/x-office-presentation.svg) application/vnd.oasis.opendocument.presentation \
+                                                                             application/vnd.oasis.opendocument.presentation-template \
+                                                                             application/vnd.ms-powerpoint \
+                                                                             application/vnd.openxmlformats-officedocument.presentationml.presentation \
+                                                                             application/vnd.openxmlformats-officedocument.presentationml.slideshow
+
+AddIconByType (database,/apaxy/theme/icons/text-x-sql.svg) application/x-msaccess \
+                                                                 application/vnd.oasis.opendocument.database
+
+AddIconByType (pdf,/apaxy/theme/icons/application-pdf.svg) application/pdf
+
+AddIconByType (rtf,/apaxy/theme/icons/text-richtext.svg) application/rtf
+
+AddIconByType (tex,/apaxy/theme/icons/text-x-tex.svg) application/x-latex \
+                                                            application/x-tex
+
+AddIcon /apaxy/theme/icons/text-x-chdr.svg .h
+
+AddIcon /apaxy/theme/icons/text-x-c++hdr.svg .hpp
+
+AddIcon /apaxy/theme/icons/text-x-c++.svg .cpp
+
+AddIconByType (c,/apaxy/theme/icons/text-x-c.svg) text/x-c
+
+AddIconByType (java,/apaxy/theme/icons/text-x-java.svg) text/x-java-source \
+                                                              application/java-archive \
+                                                              application/java-vm
+
+AddIcon /apaxy/theme/icons/text-css.svg .sass .scss
+
+AddIconByType (css,/apaxy/theme/icons/text-css.svg) text/css
+
+AddIconByType (js,/apaxy/theme/icons/text-x-javascript.svg) application/javascript \
+                                                                  application/json
+
+AddIcon /apaxy/theme/icons/text-x-source.svg .diff .patch
+
+AddIcon /apaxy/theme/icons/text-x-makefile.svg Makefile
+
+AddIcon /apaxy/theme/icons/application-x-php.svg .php .phtml
+
+AddIcon /apaxy/theme/icons/text-x-python.svg .py
+
+AddIcon /apaxy/theme/icons/application-x-ruby.svg .rb
+
+AddIconByType (sql,/apaxy/theme/icons/text-x-sql.svg) application/x-sql
+
+AddIconByType (xml,/apaxy/theme/icons/text-xml.svg) application/xml \
+                                                          application/xml-dtd
+
+AddIcon /apaxy/theme/icons/package-x-generic.svg .pkg
+
+AddIconByType (bin,/apaxy/theme/icons/multipart-encrypted.svg) application/octet-stream
+
+AddIconByType (cd,/apaxy/theme/icons/application-x-cd-image.svg) application/x-iso9660-image
+
+AddIconByType (deb,/apaxy/theme/icons/deb.svg) application/x-debian-package
+
+AddIcon /apaxy/theme/icons/text-x-install.svg .msi
+
+AddIconByType (exe,/apaxy/theme/icons/application-x-ms-dos-executable.svg) application/x-msdownload
+
+AddIconByType (package,/apaxy/theme/icons/package-x-generic.svg) application/x-apple-diskimage \
+                                                                       application/vnd.apple.installer+xml \
+                                                                       application/vnd.android.package-archive
+
+AddIcon /apaxy/theme/icons/rpm.svg .rpm
+
+AddIconByType (script,/apaxy/theme/icons/text-x-script.svg) application/x-sh
+
+AddIconByType (font,/apaxy/theme/icons/font-x-generic.svg) font/*
+
+AddIconByType (gzip,/apaxy/theme/icons/application-x-archive.svg) application/x-gzip
+
+AddIcon /apaxy/theme/icons/application-x-archive.svg .gzip
+
+AddIconByType (rar,/apaxy/theme/icons/application-x-rar.svg) application/x-rar-compressed
+
+AddIconByType (tar,/apaxy/theme/icons/application-x-tar.svg) application/x-tar
+
+AddIconByType (zip,/apaxy/theme/icons/application-x-zip.svg) application/zip
+
+AddIconByType (archive,/apaxy/theme/icons/application-x-archive.svg) application/x-7z-compressed \
+                                                                           application/x-bzip \
+                                                                           application/x-bzip2 \
+                                                                           application/vnd.ms-cab-compressed
+
+AddIconByType (text,/apaxy/theme/icons/image-x-generic.svg) application/x-cbr
+
+AddIconByType (text,/apaxy/theme/icons/text-plain.svg) application/epub+zip \
+                                                             application/x-mobipocket-ebook \
+                                                             application/vnd.amazon.ebook
+
+AddIcon /apaxy/theme/icons/text-x-readme.svg README
+
+AddIcon /apaxy/theme/icons/text-richtext.svg .markdown .md
+
+AddIconByType (text,/apaxy/theme/icons/text-plain.svg) text/*
+
+DefaultIcon /apaxy/theme/icons/empty.svg
+
+HeaderName /apaxy/theme/header.html
+ReadmeName /apaxy/theme/footer.html
+IndexStyleSheet /apaxy/theme/style.css

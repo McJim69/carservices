@@ -1,0 +1,61 @@
+.box-item .box-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transform: scale(0);
+    transition: .5s;
+}
+
+.box-item:hover .box-overlay {
+    transform: scale(1);
+}
+
+.box-item .box-overlay .btn {
+    color: var(--primary);
+    background: #bbb;
+	border-radius:3px;
+	width:150px;
+}
+
+.box-item .box-overlay .btn:hover {
+    color: var(--light);
+    background: var(--primary);
+}
+
+.blinking {
+	display:inline-block;  
+	animation: blink 2s ease-in infinite;
+}
+
+@keyframes blink {
+	from, to { opacity: 1 }
+	50% { opacity: 0 }
+}
+
+.addtr{
+	text-transform: capitalize;
+	background:#eee;
+	color: #535353;
+}
+.addtr:hover{
+	text-transform: capitalize;
+	background:pink; 
+}
+.addtd{
+	text-align:center;
+	padding:4px 4px 4px 10px;
+	color:#23234;
+	border:1px solid #bbb;
+	border-radius:4px;
+}
+.selek{
+	padding:6px 4px 6px 10px;
+	color:#23234;
+	border:1px solid #bbb;
+	border-radius:4px;
+}
+input[readonly]{
+	background-color:#eee;
+}
+
