@@ -1,10 +1,9 @@
 // Region Charts Starts
-
 google.charts.load('current', {
   'packages': ['geochart'],
   // Note: you will need to get a mapsApiKey for your project.
   // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-  'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+  'mapsApiKey': '<?php echo $mapsApiKey; ?>'
 });
 google.charts.setOnLoadCallback(drawRegionsMap);
 
@@ -28,12 +27,9 @@ function drawRegionsMap() {
 
   chart.draw(data, options);
 }
-
 // Region Charts Ends
 
-
 // Bar Charts Starts
-
 google.charts.load('current', {
   'packages': ['bar']
 });
@@ -73,18 +69,13 @@ function drawStuff() {
       maxValue: 1
     }
   };
-
   var chart = new google.charts.Bar(document.getElementById('Bar-chart'));
   chart.draw(data, options);
 };
-
-
 // Bar Charts Ends
-
 
 // Histogram Charts Starts
 (function($) {
-
   google.charts.load("current", {
     packages: ["corechart"]
   });
@@ -118,15 +109,11 @@ function drawStuff() {
     var chart = new google.visualization.Histogram(document.getElementById('Histogram-chart'));
     chart.draw(data, options);
   }
-
 })(jQuery);
-
 // Histogram Charts Ends
-
 
 // Area Chart Starts
 (function($) {
-
   google.charts.load('current', {
     'packages': ['corechart']
   });
@@ -161,14 +148,10 @@ function drawStuff() {
     var AreaChart = new google.visualization.AreaChart(document.getElementById('area-chart'));
     AreaChart.draw(data, options);
   }
-
 })(jQuery);
 // Area Chart Ends
 
-
-
 // Donut Chart Starts
-
 google.charts.load("current", {
   packages: ["corechart"]
 });
@@ -196,10 +179,7 @@ function drawChart() {
   var Donutchart = new google.visualization.PieChart(document.getElementById('Donut-chart'));
   Donutchart.draw(data, options);
 }
-
-
 // Donut Chart Ends
-
 
 // Curve Chart Starts
 (function($) {
@@ -234,9 +214,5 @@ function drawChart() {
 
     chart.draw(data, options);
   }
-
-
-
-
 })(jQuery);
 // Curve Chart Ends
