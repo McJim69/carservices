@@ -1,231 +1,100 @@
-<!-- // Chart by Months	// -->
-
 <?php
+	// Initialize
+	$monthlyTotals = [];
+	$monthlyPercents = [];
+	$sales = 0;
 
-//	error_reporting(1);
-	$jan = "JAN";
-	$feb = "FEB";
-	$mar = "MAR";
-	$apr = "APR";
-	$may = "MAY";
-	$jun = "JUN";
-	$jul = "JUL";
-	$aug = "AUG";
-	$sep = "SEP";
-	$oct = "OCT";
-	$nov = "NOV";
-	$dec = "DEC";
+	// Loop through months
+	for ($m = 1; $m <= 12; $m++) {
+		$month = str_pad($m, 2, "0", STR_PAD_LEFT);
+		$lastDay = date("t", strtotime("$post-$month-01"));
+		$where = "WHERE serv_date BETWEEN '$post-$month-01' AND '$post-$month-$lastDay'";
 
-	$janwD = "WHERE serv_date BETWEEN '$post-01-01' and '$post-01-31'";
-	$janlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $janwD");							
-	$janlA = $janlQ->fetch_assoc();
-	$janlT+= $janlA["total"];				
-	$janmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $janwD");								
-	$janmA = $janmQ->fetch_assoc();
-	$janmT+= $janmA["total"];				
-	$janT  = $janlT+$janmT;
+		// Labor
+		$laborQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $where");
+		$laborA = $laborQ->fetch_assoc();
+		$laborT = isset($laborA["total"]) ? (float)$laborA["total"] : 0;
 
-	$febwD = "WHERE serv_date BETWEEN '$post-02-01' and '$post-02-29'";
-	$feblQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $febwD");							
-	$feblA = $feblQ->fetch_assoc();
-	$feblT+= $feblA["total"];				
-	$febmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $febwD");						
-	$febmA = $febmQ->fetch_assoc();
-	$febmT+= $febmA["total"];				
-	$febT  = $feblT+$febmT;
+		// Materials
+		$matQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $where");
+		$matA = $matQ->fetch_assoc();
+		$matT = isset($matA["total"]) ? (float)$matA["total"] : 0;
 
-	$marwD = "WHERE serv_date BETWEEN '$post-03-01' and '$post-03-31'";
-	$marlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $marwD");							
-	$marlA = $marlQ->fetch_assoc();
-	$marlT+= $marlA["total"];				
-	$marmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $marwD");							
-	$marmA = $marmQ->fetch_assoc();
-	$marmT+= $marmA["total"];				
-	$marT  = $marlT+$marmT;
+		// Monthly total
+		$total = $laborT + $matT;
+		$monthlyTotals[$month] = $total;
+		$sales += $total;
+	}
 
-	$aprwD = "WHERE serv_date BETWEEN '$post-04-01' and '$post-04-31'";
-	$aprlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $aprwD");							
-	$aprlA = $aprlQ->fetch_assoc();
-	$aprlT+= $aprlA["total"];				
-	$aprmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $aprwD");							
-	$aprmA = $aprmQ->fetch_assoc();
-	$aprmT+= $aprmA["total"];				
-	$aprT  = $aprlT+$aprmT;
+	// Percentages
+	foreach ($monthlyTotals as $month => $total) {
+		$monthlyPercents[$month] = ($sales > 0) ? round(($total * 100) / $sales) : 0;
+	}
 
-	$maywD = "WHERE serv_date BETWEEN '$post-05-01' and '$post-05-31'";
-	$maylQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $maywD");							
-	$maylA = $maylQ->fetch_assoc();
-	$maylT+= $maylA["total"];				
-	$maymQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $maywD");							
-	$maymA = $maymQ->fetch_assoc();
-	$maymT+= $maymA["total"];				
-	$mayT  = $maylT+$maymT;
+	// Map back to individual variables for chart compatibility
+	$janT = $monthlyTotals['01']; $janP = $monthlyPercents['01']; $jan = "JAN";
+	$febT = $monthlyTotals['02']; $febP = $monthlyPercents['02']; $feb = "FEB";
+	$marT = $monthlyTotals['03']; $marP = $monthlyPercents['03']; $mar = "MAR";
+	$aprT = $monthlyTotals['04']; $aprP = $monthlyPercents['04']; $apr = "APR";
+	$mayT = $monthlyTotals['05']; $mayP = $monthlyPercents['05']; $may = "MAY";
+	$junT = $monthlyTotals['06']; $junP = $monthlyPercents['06']; $jun = "JUN";
+	$julT = $monthlyTotals['07']; $julP = $monthlyPercents['07']; $jul = "JUL";
+	$augT = $monthlyTotals['08']; $augP = $monthlyPercents['08']; $aug = "AUG";
+	$sepT = $monthlyTotals['09']; $sepP = $monthlyPercents['09']; $sep = "SEP";
+	$octT = $monthlyTotals['10']; $octP = $monthlyPercents['10']; $oct = "OCT";
+	$novT = $monthlyTotals['11']; $novP = $monthlyPercents['11']; $nov = "NOV";
+	$decT = $monthlyTotals['12']; $decP = $monthlyPercents['12']; $dec = "DEC";
 
-	$junwD = "WHERE serv_date BETWEEN '$post-06-01' and '$post-06-31'";
-	$junlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $junwD");							
-	$junlA = $junlQ->fetch_assoc();
-	$junlT+= $junlA["total"];				
-	$junmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $junwD");							
-	$junmA = $junmQ->fetch_assoc();
-	$junmT+= $junmA["total"];				
-	$junT  = $junlT+$junmT;
+	// --- Status Totals ---
+	$tran = "transactions WHERE serv_date BETWEEN '$post-01-01' AND '$post-12-31'";
+	$dets = "trans_details WHERE serv_date BETWEEN '$post-01-01' AND '$post-12-31'";
 
-	$julwD = "WHERE serv_date BETWEEN '$post-07-01' and '$post-07-31'";
-	$jullQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $julwD");							
-	$jullA = $jullQ->fetch_assoc();
-	$jullT += $jullA["total"];				
-	$julmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $julwD");								
-	$julmA = $julmQ->fetch_assoc();
-	$julmT+= $julmA["total"];				
-	$julT  = $jullT+$julmT;
+	$pdtt = $pntt = $cltt = 0;
 
-	$augwD = "WHERE serv_date BETWEEN '$post-08-01' and '$post-08-31'";
-	$auglQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $augwD");							
-	$auglA = $auglQ->fetch_assoc();
-	$auglT+= $auglA["total"];				
-	$augmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $augwD");							
-	$augmA = $augmQ->fetch_assoc();
-	$augmT+= $augmA["total"];				
-	$augT  = $auglT+$augmT;
+	// Paid
+	$pdlq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran AND payment='Paid'");
+	$pdla = $pdlq->fetch_assoc();
+	$pdtt += isset($pdla["total"]) ? (float)$pdla["total"] : 0;
 
-	$sepwD = "WHERE serv_date BETWEEN '$post-09-01' and '$post-09-31'";
-	$seplQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $sepwD");							
-	$seplA = $seplQ->fetch_assoc();
-	$seplT+= $seplA["total"];				
-	$sepmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $sepwD");								
-	$sepmA = $sepmQ->fetch_assoc();
-	$sepmT+= $sepmA["total"];				
-	$sepT  = $seplT+$sepmT;
+	$pdmq = $link->query("SELECT SUM(product_price) AS total FROM $dets AND payment='Paid'");
+	$pdma = $pdmq->fetch_assoc();
+	$pdtt += isset($pdma["total"]) ? (float)$pdma["total"] : 0;
 
-	$octwD = "WHERE serv_date BETWEEN '$post-10-01' and '$post-10-31'";
-	$octlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $octwD");							
-	$octlA = $octlQ->fetch_assoc();
-	$octlT+= $octlA["total"];				
-	$octmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $octwD");								
-	$octmA = $octmQ->fetch_assoc();
-	$octmT+= $octmA["total"];				
-	$octT  = $octlT+$octmT;
+	// Pending
+	$pnlq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran AND payment='Pending'");
+	$pnla = $pnlq->fetch_assoc();
+	$pntt += isset($pnla["total"]) ? (float)$pnla["total"] : 0;
 
-	$novwD = "WHERE serv_date BETWEEN '$post-11-01' and '$post-11-31'";
-	$novlQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $novwD");							
-	$novlA = $novlQ->fetch_assoc();
-	$novlT += $novlA["total"];				
-	$novmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $novwD");							
-	$novmA = $novmQ->fetch_assoc();
-	$novmT+= $novmA["total"];				
-	$novT  = $novlT+$novmT;
+	$pnmq = $link->query("SELECT SUM(product_price) AS total FROM $dets AND payment='Pending'");
+	$pnma = $pnmq->fetch_assoc();
+	$pntt += isset($pnma["total"]) ? (float)$pnma["total"] : 0;
 
-	$decwD = "WHERE serv_date BETWEEN '$post-12-01' and '$post-12-31'";
-	$declQ = $link->query("SELECT SUM(labor_cost) AS total FROM transactions $decwD");							
-	$declA = $declQ->fetch_assoc();
-	$declT+= $declA["total"];				
-	$decmQ = $link->query("SELECT SUM(product_price) AS total FROM trans_details $decwD");							
-	$decmA = $decmQ->fetch_assoc();
-	$decmT+= $decmA["total"];				
-	$decT  = $declT+$decmT;	
+	// Collectable
+	$cllq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran AND payment='Collectable'");
+	$clla = $cllq->fetch_assoc();
+	$cltt += isset($clla["total"]) ? (float)$clla["total"] : 0;
 
-	$sales = $janT + $febT + $marT + $aprT + $mayT + $junT + $julT + $augT + $sepT + $octT + $novT + $decT;
-		
-	$janA=($janT*100)/$sales;
-	$janP=round($janA);
+	$clmq = $link->query("SELECT SUM(product_price) AS total FROM $dets AND payment='Collectable'");
+	$clma = $clmq->fetch_assoc();
+	$cltt += isset($clma["total"]) ? (float)$clma["total"] : 0;
 
-	$febA=($febT*100)/$sales;
-	$febP=round($febA);
-
-	$marA=($marT*100)/$sales;
-	$marP=round($marA);
-
-	$aprA=($aprT*100)/$sales;
-	$aprP=round($aprA);
-
-	$mayA=($mayT*100)/$sales;
-	$mayP=round($mayA);
-
-	$junA=($junT*100)/$sales;
-	$junP=round($junA);
-
-	$julA=($julT*100)/$sales;
-	$julP=round($julA);
-
-	$augA=($augT*100)/$sales;
-	$augP=round($augA);
-
-	$sepA=($sepT*100)/$sales;
-	$sepP=round($sepA);
-
-	$octA=($octT*100)/$sales;
-	$octP=round($octA);
-
-	$novA=($novT*100)/$sales;
-	$novP=round($novA);
-
-	$decA=($decT*100)/$sales;
-	$decP=round($decA);
-
-?>
-<!-- // Chart by Status	// -->
-<?php	
-	$paid = "AND payment = 'Paid'";
-	$pend = "AND payment = 'Pending'";
-	$coll = "AND payment = 'Collectable'";
-
-	$tran = "transactions  WHERE serv_date BETWEEN '$post-01-01' and '$post-12-31' ";	
-	$dets = "trans_details WHERE serv_date BETWEEN '$post-01-01' and '$post-12-31' ";	
-		
-	$pdlq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran $paid");							
-	$pdla = $pdlq->fetch_array();
-	$pdtt+= $pdla["total"];					
-	$pdmq = $link->query("SELECT SUM(product_price) AS total FROM $dets $paid");								
-	$pdma = $pdmq->fetch_array();
-	$pdtt+= $pdma["total"];
-
-	$pnlq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran $pend");							
-	$pnla = $pnlq->fetch_array();
-	$pntt+= $pnla["total"];				
-	$pnmq = $link->query("SELECT SUM(product_price) AS total FROM $dets $pend");								
-	$pnma = $pnmq->fetch_array();
-	$pntt+= $pnma["total"];	
-
-	$cllq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran ");						
-	$clla = $cllq->fetch_array();
-	$cltt+= $clla["total"];				
-	$clmq = $link->query("SELECT SUM(product_price) AS total FROM $dets $coll");							
-	$clma = $clmq->fetch_array();
-	$cltt+= $clma["total"];	
-			
-	//Total by Statuses
+	// Status percentages
 	$stat = $pdtt + $pntt + $cltt;
+	$pdpa = ($stat > 0) ? round(($pdtt * 100) / $stat) : 0;
+	$pnpa = ($stat > 0) ? round(($pntt * 100) / $stat) : 0;
+	$clpa = ($stat > 0) ? round(($cltt * 100) / $stat) : 0;
 
-	//Percentage by Statuses
-	$pdpc = ($pdtt*100)/$stat;
-	$pdpa = round($pdpc);
+	// --- Labor vs Materials ---
+	$labq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran");
+	$laba = $labq->fetch_assoc();
+	$labt = isset($laba["total"]) ? (float)$laba["total"] : 0;
 
-	$pnpc = ($pntt*100)/$stat;
-	$pnpa = round($pnpc);
+	$matq = $link->query("SELECT SUM(product_price) AS total FROM $dets");
+	$mata = $matq->fetch_assoc();
+	$matt = isset($mata["total"]) ? (float)$mata["total"] : 0;
 
-	$clpc = ($cltt*100)/$stat;
-	$clpa = round($clpc);	
-	
-// Report by Labor and Materials // 
-
-	$labq = $link->query("SELECT SUM(labor_cost) AS total FROM $tran ");						
-	$laba = $labq->fetch_array();
-	$labt+= $laba["total"];				
-	$matq = $link->query("SELECT SUM(product_price) AS total FROM $dets ");							
-	$mata = $matq->fetch_array();
-	$matt+= $mata["total"];	
-
-	//Total Labor and Meterials
 	$tlmt = $labt + $matt;
-
-	//Percentage by Labor and Materials
-	$labpc = ($labt*100)/$tlmt;
-	$labpa = round($labpc);
-
-	$matpc = ($matt*100)/$tlmt;
-	$matpa = round($matpc);
-
-	$tlmpc = ($tlmt*100)/$tlmt;
-	$tlmpa = round($tlmpc);
-
+	$labpa = ($tlmt > 0) ? round(($labt * 100) / $tlmt) : 0;
+	$matpa = ($tlmt > 0) ? round(($matt * 100) / $tlmt) : 0;
+	$tlmpa = ($tlmt > 0) ? round(($tlmt * 100) / $tlmt) : 0;
 ?>
